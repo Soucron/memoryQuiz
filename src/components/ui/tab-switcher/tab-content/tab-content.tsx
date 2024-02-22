@@ -2,14 +2,14 @@ import { ComponentPropsWithoutRef, ElementRef, ReactNode, forwardRef } from 'rea
 
 import { Content } from '@radix-ui/react-tabs'
 
-import s from './tab-item.module.scss'
+import s from './tab-content.module.scss'
 
-type TabItemProps = {
+type TabContentProps = {
   children: ReactNode
   value: string
 } & ComponentPropsWithoutRef<typeof Content>
 
-export const TabItem = forwardRef<ElementRef<typeof Content>, TabItemProps>(
+export const TabContent = forwardRef<ElementRef<typeof Content>, TabContentProps>(
   ({ children, value }, ref) => {
     return (
       <Content className={s.content} ref={ref} value={value}>

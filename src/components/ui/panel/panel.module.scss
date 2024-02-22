@@ -1,0 +1,20 @@
+.root {
+  display: flex;
+  gap: 24px;
+  align-items: end;
+  justify-content: center;
+}
+
+.input {
+  width: 300px;
+}
+
+.button {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+
+  min-width: 144px;
+  height: 36px;
+  margin-left: 12px;
+}

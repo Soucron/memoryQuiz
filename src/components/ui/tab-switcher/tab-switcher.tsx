@@ -1,10 +1,11 @@
-import {ComponentPropsWithoutRef, ElementRef, ReactNode, forwardRef} from 'react'
+import { ComponentPropsWithoutRef, ElementRef, ReactNode, forwardRef } from 'react'
 
-import { List, Root, Trigger } from '@radix-ui/react-tabs'
+import { TabContent } from '@/components/ui/tab-switcher/tab-content'
+import { TabButton } from '@/components/ui/tab-switcher/tab-item'
+import { Typography } from '@/components/ui/typography'
+import { List, Root } from '@radix-ui/react-tabs'
 
 import s from './tab-switcher.module.scss'
-
-import { TabItem } from './tab-item/tab-item'
 
 export type TabItemType = {
   content?: ReactNode
@@ -14,25 +15,35 @@ export type TabItemType = {
 }
 
 type PropsType = {
+  label?: string
   onValueChange?: (value: string) => void
   tabs: TabItemType[]
 } & ComponentPropsWithoutRef<typeof Root>
 export const TabSwitcher = forwardRef<ElementRef<typeof Root>, PropsType>(
-    ({ tabs }, ref) => {
-  return (
-    <Root className={s.root} defaultValue={tabs[0].value} ref={ref}>
-      <List aria-label={'tabs example'} className={s.list}>
+  ({ label, tabs }, ref) => {
+    return (
+      <Root className={s.root} ref={ref}>
+        {label && (
+          <Typography as={'label'} variant={'body2'}>
+            {label}
+          </Typography>
+        )}
+        <List aria-label={'tabs example'} className={s.list}>
+          {tabs.map(tab => (
+            <TabButton
+              disabled={tab.disabled}
+              key={tab.value}
+              label={tab.label}
+              value={tab.value}
+            />
+          ))}
+        </List>
         {tabs.map(tab => (
-          <Trigger className={s.trigger} disabled={tab.disabled} key={tab.value} value={tab.value}>
-            {tab.label}
-          </Trigger>
+          <TabContent key={tab.value} value={tab.value}>
+            {tab.content}
+          </TabContent>
         ))}
-      </List>
-      {tabs.map(tab => (
-        <TabItem key={tab.value} value={tab.value} >
-          {tab.content}
-        </TabItem>
-      ))}
-    </Root>
-  )
-})
+      </Root>
+    )
+  }
+)

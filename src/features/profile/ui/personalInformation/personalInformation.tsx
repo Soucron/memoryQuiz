@@ -11,11 +11,19 @@ import s from './personalInformation.module.scss'
 
 import { ChangeNameForm } from './changeNameForm'
 
-type PersonalInfoProps = {
+export type ProfileDataType = {
   avatar?: string
+  email: string
+  name: string
 }
 
-export const PersonalInformation = ({ avatar }: PersonalInfoProps) => {
+type Props = {
+  profileData: ProfileDataType
+  updateProfile: (data: ChangeNameFormValues) => void
+}
+
+export const PersonalInformation = ({ profileData, updateProfile }: Props) => {
+  const { avatar, email, name } = profileData
   const classNames = {
     avatar: clsx(s.avatar),
     container: clsx(s.container),
@@ -24,7 +32,7 @@ export const PersonalInformation = ({ avatar }: PersonalInfoProps) => {
 
   const [edit, setEdit] = useState(false)
   const onSubmit = (data: ChangeNameFormValues) => {
-    console.log(data)
+    updateProfile(data)
     setEdit(false)
   }
 
@@ -39,7 +47,7 @@ export const PersonalInformation = ({ avatar }: PersonalInfoProps) => {
       {edit ? (
         <ChangeNameForm onSubmit={onSubmit} />
       ) : (
-        <ProfileInfo EditHandler={EditHandler} email={'Ivan@mail.com'} name={'Ivan'} />
+        <ProfileInfo EditHandler={EditHandler} email={email} name={name} />
       )}
     </Card>
   )

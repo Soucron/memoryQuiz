@@ -25,7 +25,7 @@ export const authApi = baseApi.injectEndpoints({
         url: 'auth/logout',
       }),
     }),
-    me: builder.query<AuthResponseType, void>({
+    me: builder.query<AuthResponseType | null, void>({
       providesTags: ['Me'],
       query: () => 'auth/me',
     }),
